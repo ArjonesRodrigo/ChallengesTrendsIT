@@ -1,0 +1,175 @@
+<!-- views/products.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Produtos</title>
+ <style>
+    body {
+      background: linear-gradient(45deg, #f7c9b1, #fc98aa);
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Cardinal';
+      color: #8b0000;
+      font-weight: bold;
+	  font-size: 40px;
+    }
+	h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Cardinal';
+      color: #8b0000;
+      font-weight: bold;
+	  font-size: 40px;
+    }
+	
+    form {
+      background: #ffc0cb;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #ab6c89;
+      color: #fff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    button:hover {
+      background: #ab6c89;
+    }
+    button:last-child {
+      margin-right: 40px;
+    }
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      padding: 20px 0;
+	  font-family: Arial Black; 
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* Exibe os produtos em duas colunas */
+      gap: 20px; /* Espaço entre as colunas */
+    }
+    li {
+      width: 100%; /* Faz com que cada produto ocupe 100% da largura da coluna */
+    }
+    img {
+      max-width: 100%; /* Faz com que a imagem ocupe 100% da largura do contêiner */
+      height: auto;
+    }
+  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Brush+Script+MT&display=swap">
+</head>
+<body>
+  <div class="container">
+    <h1>Produtos listados da API</h1>
+	<h2>< https://makeup-app.herokuapp.com/ ></h2>
+    
+  <ul>
+      <% products.forEach(product => { %>
+        <li>
+	</li>
+      <% }); %>
+    </ul>
+	
+<form action="/products" method="get">
+  <label for="type">Tipo de Produto:</label>
+  <input type="text" name="type" id="type">
+  <br>
+  <label for="brand">Marca:</label>
+  <input type="text" name="brand" id="brand">
+  <br>
+  <label for="color">Cor:</label>
+  <input type="text" name="color" id="color">
+  <br>
+ <label for="minPrice">Preço Mínimo:</label>
+  <input type="number" name="minPrice" id="minPrice" step="1.00">
+  <button type="button" id="minPriceIncrement">+ R$ 1,00</button>
+  <button type="button" id="minPriceDecrement">- R$ 1,00</button>
+  <br>
+  <label for="maxPrice">Preço Máximo:</label>
+  <input type="number" name="maxPrice" id="maxPrice" step="1.00">
+  <button type="button" id="maxPriceIncrement">+ R$ 1,00</button>
+  <button type="button" id="maxPriceDecrement">- R$ 1,00</button>
+  <br>
+  <button type="submit">Filtrar</button>
+</form>
+
+<!-- Lista de produtos  -->
+<script>
+  const minPriceInput = document.getElementById('minPrice');
+  const maxPriceInput = document.getElementById('maxPrice');
+  const minPriceIncrementBtn = document.getElementById('minPriceIncrement');
+  const minPriceDecrementBtn = document.getElementById('minPriceDecrement');
+  const maxPriceIncrementBtn = document.getElementById('maxPriceIncrement');
+  const maxPriceDecrementBtn = document.getElementById('maxPriceDecrement');
+
+  minPriceIncrementBtn.addEventListener('click', () => {
+    minPriceInput.value = (parseFloat(minPriceInput.value) + 1.00).toFixed(2);
+  });
+
+  minPriceDecrementBtn.addEventListener('click', () => {
+    minPriceInput.value = (parseFloat(minPriceInput.value) - 1.00).toFixed(2);
+  });
+
+  maxPriceIncrementBtn.addEventListener('click', () => {
+    maxPriceInput.value = (parseFloat(maxPriceInput.value) + 1.00).toFixed(2);
+  });
+
+  maxPriceDecrementBtn.addEventListener('click', () => {
+    maxPriceInput.value = (parseFloat(maxPriceInput.value) - 1.00).toFixed(2);
+  });
+</script>
+
+    <% products.forEach(product => { %>
+      <li>
+        <strong>Marca:</strong> <%= product.brand %><br>
+        <strong>Nome:</strong> <%= product.name %><br>
+        <img src="<%= product.image_link %>" alt="<%= product.name %>"><br>
+        <strong>Preço:</strong> <%= product.price %>
+      </li>
+    <% }); %>
+  </ul>
+  <% if (nextPage) { %>
+    <a href="<%= nextPage %>">Próxima Página</a>
+
+  <% } %>
+ 
+
+<footer>
+  <label for="feedback">Desenvolvido para atender ao Desafio API no programa TrendsIT da SOFTEX pelo aluno Rodrigo M.F.A.</label>
+  
+</footer>
+</div>
+</body>
+</html>
