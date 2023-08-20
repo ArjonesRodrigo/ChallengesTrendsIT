@@ -1,0 +1,6 @@
+/* Usou-se para a solução o Node.js, servidor local na porta 3000 com as dependências npm express, axios e sqlite3 
+como banco de dados para armazenar os dados e mitigar a instabilidade da API externa.
+Atendeu-se aos requisitos do desafio ao consumir dados da API por GET e listá-los mostrando os atributos indicados com a devida paginação
+conforme demandado.
+Solução básica. */
+
