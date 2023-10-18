@@ -3,38 +3,32 @@ import java.util.Scanner;
 
 // Classe base para decriptar mensagens encriptadas.
 class Decriptador {
-    private String palavraConhecida;
-
-    // Construtor da classe Decriptador que recebe a palavra conhecida como parametro.
-    public Decriptador(String palavraConhecida) {
-        this.palavraConhecida = palavraConhecida;
+    
+	// Metodo para decriptar uma mensagem encriptada
+    public static String decriptar(String palavraConhecida, String mensagemEncriptada) {
+        int deslocamento = calcularDeslocamento(mensagemEncriptada, palavraConhecida);
+        return aplicarDeslocamento(mensagemEncriptada, -deslocamento);
     }
 
-    // Metodo para decriptar a mensagem encriptada.
-    public String decriptar(String mensagemEncriptada) {
-        int deslocamento = calculeDeslocamento(mensagemEncriptada);
-        return corrijaDeslocamento(mensagemEncriptada, -deslocamento);
+    // Metodo para quebrar o codigo da mensagem encriptada
+    public static String quebrarCodigo(String palavraConhecida, String mensagemEncriptada) {
+        int deslocamento = calcularDeslocamento(mensagemEncriptada, palavraConhecida);
+        return aplicarDeslocamento(mensagemEncriptada, -deslocamento);
     }
 
-    // Metodo para quebrar o codigo da mensagem encriptada.
-    public String quebrarCodigo(String mensagemEncriptada) {
-        int deslocamento = calculeDeslocamento(mensagemEncriptada);
-        return corrijaDeslocamento(mensagemEncriptada, -deslocamento);
-    }
-
-    // Metodo privado para calcular o deslocamento suficiente para decriptar a mensagem.
-    private int calculeDeslocamento(String mensagemEncriptada) {
+    // Metodo privado para calcular o deslocamento necessario para decriptar a mensagem
+    private static int calcularDeslocamento(String mensagemEncriptada, String palavraConhecida) {
         for (int deslocamento = 0; deslocamento < 26; deslocamento++) {
-            String decriptada = corrijaDeslocamento(mensagemEncriptada, -deslocamento);
+            String decriptada = aplicarDeslocamento(mensagemEncriptada, -deslocamento);
             if (decriptada.contains(palavraConhecida)) {
                 return deslocamento;
             }
         }
-        return 0; // Deslocamento padrao se nao encontrar a palavra.
+        return 0; // Deslocamento padrao se a palavra nao for encontrada.
     }
 
-    // Metodo privado para aplicar o deslocamento e decriptar a mensagem.
-    private String corrijaDeslocamento(String mensagem, int deslocamento) {
+    // Metodo privado para aplicar o deslocamento e decriptar a mensagem
+    private static String aplicarDeslocamento(String mensagem, int deslocamento) {
         StringBuilder decriptada = new StringBuilder();
 
         for (char c : mensagem.toCharArray()) {
@@ -56,7 +50,8 @@ public class RevelarDecriptacao {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String mensagemEncriptada;
-        // Solicita a entrada da mensagem encriptada pelo usuario, validando-a.
+		
+		// Solicita a entrada da mensagem encriptada pelo usuario, validando-a.
         do {
             System.out.print("Digite a mensagem encriptada: ");
             mensagemEncriptada = scanner.nextLine();
@@ -67,7 +62,8 @@ public class RevelarDecriptacao {
         } while (!mensagemEncriptada.matches("^[a-zA-Z ]*$"));
 
         String palavraConhecida;
-        // Solicita a entrada da palavra conhecida pelo usuario, validando-a.
+		
+		// Solicita a entrada da palavra conhecida pelo usuario, validando-a.
         do {
             System.out.print("Digite a palavra conhecida (única palavra, sem espaços): ");
             palavraConhecida = scanner.nextLine();
@@ -76,15 +72,13 @@ public class RevelarDecriptacao {
                 System.out.println("A palavra conhecida deve conter apenas letras e não deve conter espaços.");
             }
         } while (!palavraConhecida.matches("^[a-zA-Z]*$") || palavraConhecida.contains(" "));
-
-         // Cria um objeto Decriptador com a palavra conhecida fornecida.
-        Decriptador decriptador = new Decriptador(palavraConhecida);
-        
-        // Chama o metodo quebrarCodigo para decriptar a mensagem encriptada.
-        String mensagemDecriptada = decriptador.quebrarCodigo(mensagemEncriptada);
-
-        // Exibe a mensagem decriptada na saida.
+		
+		// Chama o metodo quebrarCodigo da classe Decriptador para decriptar a mensagem encriptada usando a palavra conhecida fornecida.
+        String mensagemDecriptada = Decriptador.quebrarCodigo(palavraConhecida, mensagemEncriptada);
+		
+		// Exibe a mensagem decriptada na saida.
         System.out.println("Mensagem decriptada: " + mensagemDecriptada);
     }
 }
+
 
