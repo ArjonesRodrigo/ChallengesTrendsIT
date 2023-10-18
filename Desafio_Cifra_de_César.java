@@ -4,19 +4,19 @@ import java.util.Scanner;
 // Classe base para decriptar mensagens encriptadas.
 class Decriptador {
     
-	// Metodo para decriptar uma mensagem encriptada
+// Metodo para decriptar uma mensagem encriptada
     public static String decriptar(String palavraConhecida, String mensagemEncriptada) {
         int deslocamento = calcularDeslocamento(mensagemEncriptada, palavraConhecida);
         return aplicarDeslocamento(mensagemEncriptada, -deslocamento);
     }
 
-    // Metodo para quebrar o codigo da mensagem encriptada
+// Metodo para quebrar o codigo da mensagem encriptada
     public static String quebrarCodigo(String palavraConhecida, String mensagemEncriptada) {
         int deslocamento = calcularDeslocamento(mensagemEncriptada, palavraConhecida);
         return aplicarDeslocamento(mensagemEncriptada, -deslocamento);
     }
 
-    // Metodo privado para calcular o deslocamento necessario para decriptar a mensagem
+// Metodo privado para calcular o deslocamento necessario para decriptar a mensagem
     private static int calcularDeslocamento(String mensagemEncriptada, String palavraConhecida) {
         for (int deslocamento = 0; deslocamento < 26; deslocamento++) {
             String decriptada = aplicarDeslocamento(mensagemEncriptada, -deslocamento);
@@ -27,7 +27,7 @@ class Decriptador {
         return 0; // Deslocamento padrao se a palavra nao for encontrada.
     }
 
-    // Metodo privado para aplicar o deslocamento e decriptar a mensagem
+// Metodo privado para aplicar o deslocamento e decriptar a mensagem
     private static String aplicarDeslocamento(String mensagem, int deslocamento) {
         StringBuilder decriptada = new StringBuilder();
 
@@ -51,7 +51,7 @@ public class RevelarDecriptacao {
         Scanner scanner = new Scanner(System.in);
         String mensagemEncriptada;
 		
-		// Solicita a entrada da mensagem encriptada pelo usuario, validando-a.
+// Solicita a entrada da mensagem encriptada pelo usuario, validando-a.
         do {
             System.out.print("Digite a mensagem encriptada: ");
             mensagemEncriptada = scanner.nextLine();
@@ -63,7 +63,7 @@ public class RevelarDecriptacao {
 
         String palavraConhecida;
 		
-		// Solicita a entrada da palavra conhecida pelo usuario, validando-a.
+// Solicita a entrada da palavra conhecida pelo usuario, validando-a.
         do {
             System.out.print("Digite a palavra conhecida (única palavra, sem espaços): ");
             palavraConhecida = scanner.nextLine();
@@ -73,10 +73,10 @@ public class RevelarDecriptacao {
             }
         } while (!palavraConhecida.matches("^[a-zA-Z]*$") || palavraConhecida.contains(" "));
 		
-		// Chama o metodo quebrarCodigo da classe Decriptador para decriptar a mensagem encriptada usando a palavra conhecida fornecida.
+// Chama o metodo quebrarCodigo da classe Decriptador para decriptar a mensagem encriptada usando a palavra conhecida fornecida.
         String mensagemDecriptada = Decriptador.quebrarCodigo(palavraConhecida, mensagemEncriptada);
 		
-		// Exibe a mensagem decriptada na saida.
+// Exibe a mensagem decriptada na saida.
         System.out.println("Mensagem decriptada: " + mensagemDecriptada);
     }
 }
