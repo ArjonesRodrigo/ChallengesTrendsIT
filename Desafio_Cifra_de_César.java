@@ -55,24 +55,31 @@ class Decriptador {
 public class RevelarDecriptacao {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        String mensagemEncriptada;
+        // Solicita a entrada da mensagem encriptada pelo usuario, validando-a.
+        do {
+            System.out.print("Digite a mensagem encriptada: ");
+            mensagemEncriptada = scanner.nextLine();
 
-        // Solicita a entrada da mensagem encriptada pelo usuario.
-        System.out.print("Digite a mensagem encriptada: ");
-        String mensagemEncriptada = scanner.nextLine();
+            if (!mensagemEncriptada.matches("^[a-zA-Z ]*$")) {
+                System.out.println("A mensagem encriptada deve conter apenas letras e espaços.");
+            }
+        } while (!mensagemEncriptada.matches("^[a-zA-Z ]*$"));
 
-        // Solicita a entrada da palavra conhecida pelo usuario.
-        System.out.print("Digite a palavra conhecida: ");
-        String palavraConhecida = scanner.nextLine();
+        String palavraConhecida;
+        // Solicita a entrada da palavra conhecida pelo usuario, validando-a.
+        do {
+            System.out.print("Digite a palavra conhecida (única palavra, sem espaços): ");
+            palavraConhecida = scanner.nextLine();
 
-        // Verifica se a palavra conhecida contém apenas letras
-        if (!palavraConhecida.matches("^[a-zA-Z]*$")) {
-            System.out.println("A palavra conhecida deve conter apenas letras.");
-            return;
-        }
+            if (!palavraConhecida.matches("^[a-zA-Z]*$") || palavraConhecida.contains(" ")) {
+                System.out.println("A palavra conhecida deve conter apenas letras e não deve conter espaços.");
+            }
+        } while (!palavraConhecida.matches("^[a-zA-Z]*$") || palavraConhecida.contains(" "));
 
-        // Cria um objeto Decriptador com a palavra conhecida fornecida.
+         // Cria um objeto Decriptador com a palavra conhecida fornecida.
         Decriptador decriptador = new Decriptador(palavraConhecida);
-
+        
         // Chama o metodo quebrarCodigo para decriptar a mensagem encriptada.
         String mensagemDecriptada = decriptador.quebrarCodigo(mensagemEncriptada);
 
@@ -80,3 +87,4 @@ public class RevelarDecriptacao {
         System.out.println("Mensagem decriptada: " + mensagemDecriptada);
     }
 }
+
