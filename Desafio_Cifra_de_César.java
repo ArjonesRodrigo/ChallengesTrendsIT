@@ -64,6 +64,12 @@ public class RevelarDecriptacao {
         System.out.print("Digite a palavra conhecida: ");
         String palavraConhecida = scanner.nextLine();
 
+        // Verifica se a palavra conhecida contém apenas letras
+        if (!palavraConhecida.matches("^[a-zA-Z]*$")) {
+            System.out.println("A palavra conhecida deve conter apenas letras.");
+            return;
+        }
+
         // Cria um objeto Decriptador com a palavra conhecida fornecida.
         Decriptador decriptador = new Decriptador(palavraConhecida);
 
