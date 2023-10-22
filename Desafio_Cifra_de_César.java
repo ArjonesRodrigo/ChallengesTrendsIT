@@ -2,21 +2,23 @@
 import java.util.Scanner;
 
 // Classe base para decriptar mensagens encriptadas.
+    
 class Decriptador {
     
-// Metodo para decriptar uma mensagem encriptada
+    
+    // Metodo para decriptar uma mensagem encriptada
     public static String decriptar(String palavraConhecida, String mensagemEncriptada) {
         int deslocamento = calcularDeslocamento(mensagemEncriptada, palavraConhecida);
         return aplicarDeslocamento(mensagemEncriptada, -deslocamento);
     }
-
-// Metodo para quebrar o codigo da mensagem encriptada
+    
+    // Metodo para quebrar o codigo da mensagem encriptada
     public static String quebrarCodigo(String palavraConhecida, String mensagemEncriptada) {
         int deslocamento = calcularDeslocamento(mensagemEncriptada, palavraConhecida);
         return aplicarDeslocamento(mensagemEncriptada, -deslocamento);
     }
 
-// Metodo privado para calcular o deslocamento necessario para decriptar a mensagem
+    // Metodo privado para calcular o deslocamento necessário para decriptar a mensagem
     private static int calcularDeslocamento(String mensagemEncriptada, String palavraConhecida) {
         for (int deslocamento = 0; deslocamento < 26; deslocamento++) {
             String decriptada = aplicarDeslocamento(mensagemEncriptada, -deslocamento);
@@ -24,18 +26,22 @@ class Decriptador {
                 return deslocamento;
             }
         }
-        return 0; // Deslocamento padrao se a palavra nao for encontrada.
+        return 0; // Deslocamento padrão se a palavra não for encontrada.
     }
 
-// Metodo privado para aplicar o deslocamento e decriptar a mensagem
+    // Metodo privado para aplicar o deslocamento e decriptar a mensagem
     private static String aplicarDeslocamento(String mensagem, int deslocamento) {
         StringBuilder decriptada = new StringBuilder();
 
         for (char c : mensagem.toCharArray()) {
-            if (Character.isLetter(c)) {
+            if (Character.isLetter(c) || Character.isWhitespace(c)) {
                 char base = Character.isLowerCase(c) ? 'a' : 'A';
-                int offset = (c - base + deslocamento + 26) % 26;
-                decriptada.append((char) (base + offset));
+                if (Character.isWhitespace(c)) {
+                    decriptada.append(c);
+                } else {
+                    int offset = (c - base + deslocamento + 26) % 26;
+                    decriptada.append((char) (base + offset));
+                }
             } else {
                 decriptada.append(c);
             }
@@ -45,38 +51,32 @@ class Decriptador {
     }
 }
 
-// Classe principal que interage com o usuario.
-public class RevelarDecriptacao {
+// Classe principal que interage com o usuário.
+
+public class InteractiveDecriptacao {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String mensagemEncriptada;
-		
-// Solicita a entrada da mensagem encriptada pelo usuario, validando-a.
+        String palavraConhecida;
+
+        System.out.println("Bem-vindo ao Decriptador Interativo!");
+
+        // Solicita a entrada da mensagem encriptada pelo usuário, validando-a.
         do {
             System.out.print("Digite a mensagem encriptada: ");
             mensagemEncriptada = scanner.nextLine();
+        } while (mensagemEncriptada.isEmpty());
 
-            if (!mensagemEncriptada.matches("^[a-zA-Z ]*$")) {
-                System.out.println("A mensagem encriptada deve conter apenas letras e espaços.");
-            }
-        } while (!mensagemEncriptada.matches("^[a-zA-Z ]*$"));
-
-        String palavraConhecida;
-		
-// Solicita a entrada da palavra conhecida pelo usuario, validando-a.
+        // Solicita a entrada da palavra conhecida pelo usuário, validando-a.
         do {
-            System.out.print("Digite a palavra conhecida (única palavra, sem espaços): ");
+            System.out.print("Digite a palavra conhecida (única palavra): ");
             palavraConhecida = scanner.nextLine();
+        } while (palavraConhecida.isEmpty() || palavraConhecida.contains(" "));
 
-            if (!palavraConhecida.matches("^[a-zA-Z]*$") || palavraConhecida.contains(" ")) {
-                System.out.println("A palavra conhecida deve conter apenas letras e não deve conter espaços.");
-            }
-        } while (!palavraConhecida.matches("^[a-zA-Z]*$") || palavraConhecida.contains(" "));
-		
-// Chama o metodo quebrarCodigo da classe Decriptador para decriptar a mensagem encriptada usando a palavra conhecida fornecida.
+        // Chama o método quebrarCodigo da classe Decriptador para decriptar a mensagem encriptada usando a palavra conhecida fornecida.
         String mensagemDecriptada = Decriptador.quebrarCodigo(palavraConhecida, mensagemEncriptada);
-		
-// Exibe a mensagem decriptada na saida.
+
+        // Exibe a mensagem decriptada na saída.
         System.out.println("Mensagem decriptada: " + mensagemDecriptada);
     }
 }
