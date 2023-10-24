@@ -1,4 +1,4 @@
-// Importa a classe Scanner do pacote java.util para permitir a entrada de dados pelo usuario.
+// Importa a classe Scanner do pacote java.util para permitir a entrada de dados pelo usuário.
 import java.util.Scanner;
 
 // Classe base para decriptar mensagens encriptadas.
@@ -6,19 +6,19 @@ import java.util.Scanner;
 class Decriptador {
     
     
-    // Metodo para decriptar uma mensagem encriptada
+    // Método para decriptar uma mensagem encriptada
     public static String decriptar(String palavraConhecida, String mensagemEncriptada) {
         int deslocamento = calcularDeslocamento(mensagemEncriptada, palavraConhecida);
         return aplicarDeslocamento(mensagemEncriptada, -deslocamento);
     }
     
-    // Metodo para quebrar o codigo da mensagem encriptada
+    // Método para quebrar o código da mensagem encriptada
     public static String quebrarCodigo(String palavraConhecida, String mensagemEncriptada) {
         int deslocamento = calcularDeslocamento(mensagemEncriptada, palavraConhecida);
         return aplicarDeslocamento(mensagemEncriptada, -deslocamento);
     }
 
-    // Metodo privado para calcular o deslocamento necessário para decriptar a mensagem
+    // Método privado para calcular o deslocamento necessário para decriptar a mensagem
     private static int calcularDeslocamento(String mensagemEncriptada, String palavraConhecida) {
         for (int deslocamento = 0; deslocamento < 26; deslocamento++) {
             String decriptada = aplicarDeslocamento(mensagemEncriptada, -deslocamento);
@@ -29,7 +29,7 @@ class Decriptador {
         return 0; // Deslocamento padrão se a palavra não for encontrada.
     }
 
-    // Metodo privado para aplicar o deslocamento e decriptar a mensagem
+    // Método privado para aplicar o deslocamento e decriptar a mensagem
     private static String aplicarDeslocamento(String mensagem, int deslocamento) {
         StringBuilder decriptada = new StringBuilder();
 
@@ -78,6 +78,9 @@ public class InteractiveDecriptacao {
 
         // Exibe a mensagem decriptada na saída.
         System.out.println("Mensagem decriptada: " + mensagemDecriptada);
+
+        // Fecha o Scanner após a conclusão da operação.
+        scanner.close();
     }
 }
 
